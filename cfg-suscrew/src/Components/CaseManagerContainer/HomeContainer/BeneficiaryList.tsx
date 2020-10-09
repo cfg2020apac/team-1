@@ -7,13 +7,15 @@ import {
   StyleSheet
 } from 'react-native';
 import Constants from 'expo-constants';
+import firebaseDb from '../../../../firebaseDb';
 import { Icon, Divider } from 'react-native-elements';
+import { connect } from 'react-redux';
 
-export default class BeneficiaryList extends React.Component<any, any> {
+export class BeneficiaryList extends React.Component<any, any> {
   state = {
+    data: null,
     myClient: true,
-    newClient: false,
-    isHelper: true //just using a placeholder here to check differnt users.
+    newClient: false
   };
 
   handleToggleClient = () => {
@@ -22,45 +24,40 @@ export default class BeneficiaryList extends React.Component<any, any> {
       newClient: !this.state.newClient
     });
   };
+
+  componentDidMount() {
+    this.getData();
+  }
+
+  getData = () => {
+    firebaseDb
+      .collection('Profile')
+      .where('CaseManager', '==', this.props.session.userId)
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.docs.forEach((document) => {
+          const userData = document.data();
+          const profileId = document.id;
+          data.push({ profileId, ...userData });
+        });
+        this.setState({ data });
+      });
+  };
+
   render() {
     const { navigation } = this.props;
-
-    const data = [
-      {
-        id: 1,
-        name: 'Mr Tan Ah Kau',
-        status: 'Pending',
-        bgColor: '#FFC542'
-      },
-      {
-        id: 2,
-        name: 'Mr Tan Ah Kau',
-        status: 'Follow Up',
-        bgColor: '#FF565E'
-      },
-      {
-        id: 3,
-        name: 'Mr Tan Ah Kau',
-        status: 'Completed',
-        bgColor: '#3ED598'
-      },
-      {
-        id: 4,
-        name: 'Mr Tan Ah Kau',
-        status: 'Completed',
-        bgColor: '#3ED598'
-      }
-    ];
+    const { data } = this.state;
+    const colors = ['#FFC542', '#FF565E', '#3ED598', '#3ED598'];
 
     return (
       <View style={styles.container}>
-        {this.state.isHelper && (
+        {this.props.session.role !== 'Case Manager' && (
           <View
             style={{
               marginTop: 64,
-              paddingHorizontal: 24,
-
-              flexDirection: 'row'
+              justifyContent: 'flex-end',
+              alignSelf: 'flex-end'
             }}
           >
             <TouchableOpacity
@@ -89,35 +86,71 @@ export default class BeneficiaryList extends React.Component<any, any> {
             </TouchableOpacity>
           </View>
         )}
+        {this.props.session.role === 'Case Manager' && (
+          <View
+            style={{
+              marginTop: 64,
+              paddingHorizontal: 24,
+              flexDirection: 'row'
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                borderRadius: 8,
+                backgroundColor: '#7A3789',
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                marginRight: 16,
+                marginTop: Constants.statusBarHeight
+              }}
+              onPress={() => navigation.navigate('AddProfile')}
+            >
+              <Text style={{ color: '#333' }}>➕</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                borderRadius: 8,
+                backgroundColor: '#7A3789',
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                marginRight: 16,
+                marginTop: Constants.statusBarHeight
+              }}
+              onPress={() => this.getData()}
+            >
+              <Text style={{ color: '#333' }}>🔄</Text>
+            </TouchableOpacity>
+          </View>
+        )}
         <FlatList
           style={styles.tableContainer}
           data={data}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               style={styles.itemContainer}
               onPress={() => {
-                if (this.state.isHelper) {
-                  navigation.navigate('ActivityDetails', {
-                    person: item
-                  });
-                } else navigation.navigate('Profile');
+                if (this.props.session.role !== 'Case Manager')
+                  navigation.navigate('ActivityDetails');
+                else navigation.navigate('Profile', { userData: item });
               }}
             >
-              <View
-                style={{
-                  width: 80,
-                  height: 80,
-                  borderRadius: 80 / 2,
-                  backgroundColor: item.bgColor,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <Text>👩</Text>
-              </View>
-              <View style={styles.textContainer}>
-                <Text style={styles.nameText}>{item.name}</Text>
-                <Text style={{ color: 'white' }}>{item.status}</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <View
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: 80 / 2,
+                    backgroundColor: colors[index % 4],
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Text>👩</Text>
+                </View>
+                <View style={styles.textContainer}>
+                  <Text style={styles.nameText}>{item.Name}</Text>
+                  <Text style={{ color: 'white' }}>{item.Race}</Text>
+                </View>
               </View>
               <Icon
                 name="chevron-right"
@@ -133,6 +166,12 @@ export default class BeneficiaryList extends React.Component<any, any> {
   }
 }
 
+const mapStateToProps = (state) => ({
+  session: state.session
+});
+
+export default connect(mapStateToProps)(BeneficiaryList);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -147,13 +186,13 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   tableContainer: {
-    marginTop: Constants.statusBarHeight,
     paddingHorizontal: 16,
     paddingVertical: 8
   },
   itemContainer: {
     paddingVertical: 16,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   textContainer: {
     flexDirection: 'column',

@@ -28,7 +28,7 @@ const HomeScreen = () => {
           style={styles.passInput}
           secureTextEntry={visible}
           onChangeText={text => passText(text)}
-      value={passwordValue}/>
+          value={passwordValue}/>
         <TouchableOpacity style={styles.btnEye} onPress={
           ()=>{
             setVisible(!visible)

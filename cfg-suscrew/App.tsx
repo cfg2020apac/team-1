@@ -1,6 +1,16 @@
 import React from 'react';
-import CaseManagerContainer from './src/Components/CaseManagerContainer';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './src/Reducer';
+import Components from './src/Components/Components';
+
+const store = createStore(reducer);
 
 export default function App() {
-  return <CaseManagerContainer />;
+  return (
+    <Provider store={store}>
+      <Components />
+    </Provider>
+  );
 }
+

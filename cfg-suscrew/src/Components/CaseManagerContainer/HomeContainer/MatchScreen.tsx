@@ -34,6 +34,7 @@ export default class MatchScreen extends React.Component<any, any> {
       <View style={styles.container}>
         <FlatList
           data={data}
+          keyExtractor={(item, index) => `${item.id}_${index}`}
           contentContainerStyle={styles.tableContainer}
           renderItem={({ item, index }) => (
             <View style={styles.itemContainer}>

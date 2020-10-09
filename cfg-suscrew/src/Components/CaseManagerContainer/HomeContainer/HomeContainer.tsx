@@ -4,11 +4,13 @@ import BeneficiaryList from './BeneficiaryList';
 import ProfileScreen from './ProfileScreen';
 import MatchScreen from './MatchScreen';
 import ActivityDetailsScreen from './ActivityDetailsScreen';
+import UserDetails from '../../UserDetails/UserDetails';
+import NewProfileForm from './NewProfileForm';
 
 const Stack = createStackNavigator();
 
 const HomeContainer = () => (
-  <Stack.Navigator initialRouteName="BeneficiaryList">
+  <Stack.Navigator initialRouteName="Beneficiary">
     <Stack.Screen
       name="Beneficiary"
       component={BeneficiaryList}
@@ -27,6 +29,26 @@ const HomeContainer = () => (
     <Stack.Screen
       name="Match"
       component={MatchScreen}
+      options={{
+        title: '',
+        headerBackTitle: 'Back',
+        headerStyle: { backgroundColor: '#30444E', shadowColor: 'transparent' },
+        headerTintColor: '#96A7AF'
+      }}
+    />
+    <Stack.Screen
+      name="AddProfile"
+      component={NewProfileForm}
+      options={{
+        title: '',
+        headerBackTitle: 'Back',
+        headerStyle: { backgroundColor: '#30444E', shadowColor: 'transparent' },
+        headerTintColor: '#96A7AF'
+      }}
+    />
+    <Stack.Screen
+      name="UserDetails"
+      component={UserDetails}
       options={{
         title: '',
         headerBackTitle: 'Back',
