@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   Button
 } from 'react-native';
+import { CheckBox } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import firebaseDb from '../../../../firebaseDb';
 import { connect } from 'react-redux';
 
-const NewProfileForm = ({session}) => {
+const NewProfileForm = ({ session }) => {
   const [name, setName] = useState('');
   const [nric, setNric] = useState('');
   const [address, setAddress] = useState('');
@@ -23,6 +24,9 @@ const NewProfileForm = ({session}) => {
   const [ethnicity, setEthnicity] = useState('');
   const [religion, setReligion] = useState('');
   const [gender, setGender] = useState('');
+  const [counselor, setCounselor] = useState(false);
+  const [operation, setOperation] = useState(false);
+  const [jobcoach, setJobCoach] = useState(false);
 
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -37,7 +41,10 @@ const NewProfileForm = ({session}) => {
         MobileNumber: contactNumber,
         Gender: gender,
         Citizenship: nationality,
-        CaseManager: session.userId
+        CaseManager: session.userId,
+        Counselor: counselor,
+        Operation: operation,
+        JobCoach: jobcoach
       })
       .then(() => {
         setName('');
@@ -137,6 +144,24 @@ const NewProfileForm = ({session}) => {
           onChangeText={(text) => setEthnicity(text)}
           placeholder="Ethnicity"
         />
+        <CheckBox
+          title="Requires Counselor"
+          checked={counselor}
+          containerStyle={{ backgroundColor: 'transparent' }}
+          textStyle={{ color: '#fff' }}
+        />
+        <CheckBox
+          title="Requires Operation"
+          checked={operation}
+          containerStyle={{ backgroundColor: 'transparent' }}
+          textStyle={{ color: '#fff' }}
+        />
+        <CheckBox
+          title="Requires JobCoach"
+          checked={jobcoach}
+          containerStyle={{ backgroundColor: 'transparent' }}
+          textStyle={{ color: '#fff' }}
+        />
         <TouchableOpacity
           style={styles.SignInButton}
           onPress={() => submitForm()}
@@ -148,11 +173,11 @@ const NewProfileForm = ({session}) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   session: state.session
-})
+});
 
-export default connect(mapStateToProps)(NewProfileForm)
+export default connect(mapStateToProps)(NewProfileForm);
 
 const styles = StyleSheet.create({
   register: {
