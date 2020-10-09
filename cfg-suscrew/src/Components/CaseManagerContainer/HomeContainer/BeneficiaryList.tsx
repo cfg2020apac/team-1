@@ -15,7 +15,7 @@ export class BeneficiaryList extends React.Component<any, any> {
   state = {
     data: null,
     myClient: true,
-    newClient: false,
+    newClient: false
   };
 
   handleToggleClient = () => {
@@ -26,6 +26,10 @@ export class BeneficiaryList extends React.Component<any, any> {
   };
 
   componentDidMount() {
+    this.getData()
+  }
+
+  getData = () => {
     firebaseDb
       .collection('Profile')
       .where('CaseManager', '==', this.props.session.userId)
@@ -44,17 +48,16 @@ export class BeneficiaryList extends React.Component<any, any> {
   render() {
     const { navigation } = this.props;
     const { data } = this.state;
-    const colors = ['#FFC542', '#FF565E', '#3ED598', '#3ED598']
+    const colors = ['#FFC542', '#FF565E', '#3ED598', '#3ED598'];
 
     return (
       <View style={styles.container}>
-        {this.props.session.role !== "Case Manager" && (
+        {this.props.session.role !== 'Case Manager' && (
           <View
             style={{
               marginTop: 64,
-              paddingHorizontal: 24,
-
-              flexDirection: 'row'
+              justifyContent: "flex-end",
+              alignSelf: "flex-end"
             }}
           >
             <TouchableOpacity
@@ -83,6 +86,42 @@ export class BeneficiaryList extends React.Component<any, any> {
             </TouchableOpacity>
           </View>
         )}
+        {this.props.session.role === 'Case Manager' && (
+          <View
+            style={{
+              marginTop: 64,
+              paddingHorizontal: 24,
+              flexDirection: 'row'
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                borderRadius: 8,
+                backgroundColor: '#7A3789',
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                marginRight: 16,
+                marginTop: Constants.statusBarHeight
+              }}
+              onPress={() => navigation.navigate('AddProfile')}
+            >
+              <Text style={{ color: '#333' }}>➕</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                borderRadius: 8,
+                backgroundColor: '#7A3789',
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                marginRight: 16,
+                marginTop: Constants.statusBarHeight
+              }}
+              onPress={() => this.getData()}
+            >
+              <Text style={{ color: '#333' }}>🔄</Text>
+            </TouchableOpacity>
+          </View>
+        )}
         <FlatList
           style={styles.tableContainer}
           data={data}
@@ -90,8 +129,9 @@ export class BeneficiaryList extends React.Component<any, any> {
             <TouchableOpacity
               style={styles.itemContainer}
               onPress={() => {
-                if (this.props.session.role !== "Case Manager") navigation.navigate('ActivityDetails');
-                else navigation.navigate('Profile', {userData: item});
+                if (this.props.session.role !== 'Case Manager')
+                  navigation.navigate('ActivityDetails');
+                else navigation.navigate('Profile', { userData: item });
               }}
             >
               <View
@@ -144,7 +184,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   tableContainer: {
-    marginTop: Constants.statusBarHeight,
     paddingHorizontal: 16,
     paddingVertical: 8
   },
