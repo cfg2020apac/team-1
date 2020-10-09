@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
 
 export default class MatchScreen extends React.Component<any, any> {
-  renderTraits = (key, value) => (
+  renderTraits = (key: string, value: boolean) => (
       <Text key={key} style={{color: 'white', paddingVertical: 10}}>
         {value ? '✅' : '❌'} {key}
       </Text>
