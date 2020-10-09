@@ -31,24 +31,26 @@ export default class UserDetails extends React.Component<any, any> {
             Citizenship: {userData.Citizenship}
           </Text>
           <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 30 }}>
-            Race: Chindian{' '}
+            Race: {userData.Race}
           </Text>
           <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 30 }}>
-            Languages: English, Chinese{' '}
+            Languages: {userData.LanguageSpoken}
           </Text>
           <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
-            Preferences for roommate:{' '}
+            Preferences for roommate:
           </Text>
           <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
-            Ex-Convict: No
+            Ex-Convict: {userData.Preferences.exConvict}
           </Text>
           <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
-            Smoker: No
+            Smoker: {userData.Preferences.wantSmoker}
           </Text>
           <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
-            Same Race: Yes
+            Same Race: {userData.Preferences.sameRace}
           </Text>
-          <Text style={{ color: '#fff', fontSize: 20 }}>Same Language: No</Text>
+          <Text style={{ color: '#fff', fontSize: 20 }}>
+            Same Language: {userData.Preferences.sameLanguage}
+          </Text>
         </View>
       </View>
     );
