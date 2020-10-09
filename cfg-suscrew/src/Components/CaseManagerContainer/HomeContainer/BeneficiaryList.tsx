@@ -7,10 +7,13 @@ import {
   StyleSheet
 } from 'react-native';
 import Constants from 'expo-constants';
+import firebaseDb from '../../../../firebaseDb';
 import { Icon, Divider } from 'react-native-elements';
+import { connect } from 'react-redux';
 
-export default class BeneficiaryList extends React.Component<any, any> {
+export class BeneficiaryList extends React.Component<any, any> {
   state = {
+    data: null,
     myClient: true,
     newClient: false,
     isHelper: true //just using a placeholder here to check differnt users.
@@ -22,35 +25,27 @@ export default class BeneficiaryList extends React.Component<any, any> {
       newClient: !this.state.newClient
     });
   };
+
+  componentDidMount() {
+    firebaseDb
+      .collection('Profile')
+      .where('CaseManager', '==', this.props.session.userId)
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.docs.forEach((document) => {
+          const userData = document.data();
+          const profileId = document.id;
+          data.push({ profileId, ...userData });
+        });
+        this.setState({ data });
+      });
+  }
+
   render() {
     const { navigation } = this.props;
-
-    const data = [
-      {
-        id: 1,
-        name: 'Mr Tan Ah Kau',
-        status: 'Pending',
-        bgColor: '#FFC542'
-      },
-      {
-        id: 2,
-        name: 'Mr Tan Ah Kau',
-        status: 'Follow Up',
-        bgColor: '#FF565E'
-      },
-      {
-        id: 3,
-        name: 'Mr Tan Ah Kau',
-        status: 'Completed',
-        bgColor: '#3ED598'
-      },
-      {
-        id: 4,
-        name: 'Mr Tan Ah Kau',
-        status: 'Completed',
-        bgColor: '#3ED598'
-      }
-    ];
+    const { data } = this.state;
+    const colors = ['#FFC542', '#FF565E', '#3ED598', '#3ED598']
 
     return (
       <View style={styles.container}>
@@ -92,12 +87,12 @@ export default class BeneficiaryList extends React.Component<any, any> {
         <FlatList
           style={styles.tableContainer}
           data={data}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               style={styles.itemContainer}
               onPress={() => {
                 if (this.state.isHelper) navigation.navigate('ActivityDetails');
-                else navigation.navigate('Profile');
+                else navigation.navigate('Profile', {userData: item});
               }}
             >
               <View
@@ -105,7 +100,7 @@ export default class BeneficiaryList extends React.Component<any, any> {
                   width: 80,
                   height: 80,
                   borderRadius: 80 / 2,
-                  backgroundColor: item.bgColor,
+                  backgroundColor: colors[index % 4],
                   justifyContent: 'center',
                   alignItems: 'center'
                 }}
@@ -113,8 +108,8 @@ export default class BeneficiaryList extends React.Component<any, any> {
                 <Text>👩</Text>
               </View>
               <View style={styles.textContainer}>
-                <Text style={styles.nameText}>{item.name}</Text>
-                <Text style={{ color: 'white' }}>{item.status}</Text>
+                <Text style={styles.nameText}>{item.Name}</Text>
+                <Text style={{ color: 'white' }}>{item.Race}</Text>
               </View>
               <Icon
                 name="chevron-right"
@@ -129,6 +124,12 @@ export default class BeneficiaryList extends React.Component<any, any> {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  session: state.session
+});
+
+export default connect(mapStateToProps)(BeneficiaryList);
 
 const styles = StyleSheet.create({
   container: {

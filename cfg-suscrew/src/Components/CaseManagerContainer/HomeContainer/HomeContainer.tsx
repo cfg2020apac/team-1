@@ -8,7 +8,7 @@ import ActivityDetailsScreen from './ActivityDetailsScreen';
 const Stack = createStackNavigator();
 
 const HomeContainer = () => (
-  <Stack.Navigator initialRouteName="BeneficiaryList">
+  <Stack.Navigator initialRouteName="Beneficiary">
     <Stack.Screen
       name="Beneficiary"
       component={BeneficiaryList}
