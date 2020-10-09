@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Constants from 'expo-constants';
 import firebaseDb from '../../../../firebaseDb';
-import { Icon, Divider } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 export class BeneficiaryList extends React.Component<any, any> {
@@ -64,7 +64,7 @@ export class BeneficiaryList extends React.Component<any, any> {
   render() {
     const { navigation } = this.props;
     const { data } = this.state;
-    const colors = ['#FFC542', '#FF565E', '#3ED598', '#3ED598'];
+    const colors = ['#FFC542', '#FF565E', '#3ED598'];
 
     return (
       <View style={styles.container}>
@@ -156,7 +156,7 @@ export class BeneficiaryList extends React.Component<any, any> {
                     width: 80,
                     height: 80,
                     borderRadius: 80 / 2,
-                    backgroundColor: colors[index % 4],
+                    backgroundColor: colors[index % 3],
                     justifyContent: 'center',
                     alignItems: 'center'
                   }}
