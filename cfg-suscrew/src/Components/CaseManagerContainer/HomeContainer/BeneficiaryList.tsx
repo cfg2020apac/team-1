@@ -96,8 +96,11 @@ export default class BeneficiaryList extends React.Component<any, any> {
             <TouchableOpacity
               style={styles.itemContainer}
               onPress={() => {
-                if (this.state.isHelper) navigation.navigate('ActivityDetails');
-                else navigation.navigate('Profile');
+                if (this.state.isHelper) {
+                  navigation.navigate('ActivityDetails', {
+                    person: item
+                  });
+                } else navigation.navigate('Profile');
               }}
             >
               <View
