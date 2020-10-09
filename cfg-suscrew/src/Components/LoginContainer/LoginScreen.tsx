@@ -8,11 +8,9 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import firebaseDb from '../../../firebaseDb';
+import { connect } from 'react-redux';
 
-const LoginScreen: React.FunctionComponent<any> = ({
-  setLoggedIn,
-  setRole
-}) => {
+const LoginScreen: React.FunctionComponent<any> = ({setSession}) => {
   const [value, userText] = useState('');
   const [passwordValue, passText] = useState('');
 
@@ -21,12 +19,7 @@ const LoginScreen: React.FunctionComponent<any> = ({
 
   const [error, setError] = useState('');
 
-  const userLogin = async (
-    email: string,
-    password: string,
-    setLoggedIn: Function,
-    setRole: Function
-  ) => {
+  const userLogin = async (email: string, password: string) => {
     const users = firebaseDb.collection('User');
     const snapshot = await users.where('Email', '==', value).get();
     if (snapshot.empty) {
@@ -39,8 +32,7 @@ const LoginScreen: React.FunctionComponent<any> = ({
       if (data.Password !== password) {
         setError('Wrong password!');
       } else {
-        setLoggedIn(doc.id);
-        setRole(data.Role);
+        setSession({userId: doc.id, role: data.Role})
       }
     });
   };
@@ -93,9 +85,7 @@ const LoginScreen: React.FunctionComponent<any> = ({
 
           <TouchableOpacity
             style={styles.SignInButton}
-            onPress={() =>
-              userLogin(value, passwordValue, setLoggedIn, setRole)
-            }
+            onPress={() => userLogin(value, passwordValue)}
           >
             <Text style={{ color: '#fff', fontWeight: 'bold' }}>Sign In</Text>
           </TouchableOpacity>
@@ -109,6 +99,12 @@ const LoginScreen: React.FunctionComponent<any> = ({
     </>
   );
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  setSession: (session) => dispatch({ type: 'SET_SESSION', payload: session })
+});
+
+export default connect(null, mapDispatchToProps)(LoginScreen)
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -170,5 +166,3 @@ const styles = StyleSheet.create({
     top: 22
   }
 });
-
-export default LoginScreen;

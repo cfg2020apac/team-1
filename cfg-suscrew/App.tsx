@@ -1,24 +1,15 @@
-import React  from 'react';
-import CaseManagerContainer from './src/Components/CaseManagerContainer';
-import LoginScreen from './src/Components/LoginContainer';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './src/Reducer';
+import Components from './src/Components/Components';
 
-export default class App extends React.Component {
-  state = {
-    userId: null,
-    role: null
-  };
+const store = createStore(reducer);
 
-  render() {
-    const { userId, role } = this.state;
-
-    if (!userId) {
-      return (
-        <LoginScreen
-          setLoggedIn={(id: string) => this.setState({ userId: id })}
-          setRole={(role: string) => this.setState({ role })}
-        />
-      );
-    }
-    return <CaseManagerContainer />;
-  }
+export default function App() {
+  return (
+    <Provider store={store}>
+      <Components />
+    </Provider>
+  );
 }
