@@ -16,7 +16,6 @@ export class BeneficiaryList extends React.Component<any, any> {
     data: null,
     myClient: true,
     newClient: false,
-    isHelper: true //just using a placeholder here to check differnt users.
   };
 
   handleToggleClient = () => {
@@ -49,7 +48,7 @@ export class BeneficiaryList extends React.Component<any, any> {
 
     return (
       <View style={styles.container}>
-        {this.state.isHelper && (
+        {this.props.session.role !== "Case Manager" && (
           <View
             style={{
               marginTop: 64,
@@ -91,7 +90,7 @@ export class BeneficiaryList extends React.Component<any, any> {
             <TouchableOpacity
               style={styles.itemContainer}
               onPress={() => {
-                if (this.state.isHelper) navigation.navigate('ActivityDetails');
+                if (this.props.session.role !== "Case Manager") navigation.navigate('ActivityDetails');
                 else navigation.navigate('Profile', {userData: item});
               }}
             >

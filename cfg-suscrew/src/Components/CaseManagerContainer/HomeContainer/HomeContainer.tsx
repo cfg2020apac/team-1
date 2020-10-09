@@ -4,6 +4,7 @@ import BeneficiaryList from './BeneficiaryList';
 import ProfileScreen from './ProfileScreen';
 import MatchScreen from './MatchScreen';
 import ActivityDetailsScreen from './ActivityDetailsScreen';
+import UserDetails from '../../UserDetails/UserDetails';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,16 @@ const HomeContainer = () => (
         headerTintColor: '#96A7AF'
       }}
     />
+      <Stack.Screen
+        name="UserDetails"
+        component={UserDetails}
+        options={{
+            title: '',
+            headerBackTitle: 'Back',
+            headerStyle: { backgroundColor: '#30444E', shadowColor: 'transparent' },
+            headerTintColor: '#96A7AF'
+        }}
+      />
     <Stack.Screen
       name="ActivityDetails"
       component={ActivityDetailsScreen}
