@@ -12,7 +12,8 @@ import { Icon, Divider } from 'react-native-elements';
 export default class BeneficiaryList extends React.Component<any, any> {
   state = {
     myClient: true,
-    newClient: false
+    newClient: false,
+    isHelper: true //just using a placeholder here to check differnt users.
   };
 
   handleToggleClient = () => {
@@ -53,39 +54,41 @@ export default class BeneficiaryList extends React.Component<any, any> {
 
     return (
       <View style={styles.container}>
-        <View
-          style={{
-            marginTop: 64,
-            paddingHorizontal: 24,
+        {this.state.isHelper && (
+          <View
+            style={{
+              marginTop: 64,
+              paddingHorizontal: 24,
 
-            flexDirection: 'row'
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              borderRadius: 8,
-              backgroundColor: '#7A3789',
-              paddingHorizontal: 16,
-              paddingVertical: 8,
-              marginRight: 16
+              flexDirection: 'row'
             }}
-            // onPress={this.handleToggleClient}
           >
-            <Text style={{ color: '#fff' }}>My Clients</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              borderRadius: 8,
-              backgroundColor: '#ddd',
-              paddingHorizontal: 16,
-              paddingVertical: 8,
-              marginRight: 16
-            }}
-            // onPress={this.handleToggleClient}
-          >
-            <Text style={{ color: '#333' }}>New Clients</Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+              style={{
+                borderRadius: 8,
+                backgroundColor: '#7A3789',
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                marginRight: 16
+              }}
+              // onPress={this.handleToggleClient}
+            >
+              <Text style={{ color: '#fff' }}>My Clients</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                borderRadius: 8,
+                backgroundColor: '#ddd',
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                marginRight: 16
+              }}
+              // onPress={this.handleToggleClient}
+            >
+              <Text style={{ color: '#333' }}>New Clients</Text>
+            </TouchableOpacity>
+          </View>
+        )}
         <FlatList
           style={styles.tableContainer}
           data={data}
