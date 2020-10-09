@@ -18,18 +18,21 @@ export default class ProfileScreen extends React.Component<any, any> {
       'HDB Assessment': '🏠'
     };
     return (
-      <View
-        style={[
-          styles.itemContainer,
-          status === 'Approved' && { borderColor: '#3DD598' }
-        ]}
-        key={item}
-      >
-        <View style={styles.box}>
+      <View style={styles.itemContainer} key={item}>
+        <View
+          style={[
+            styles.box,
+            status === 'Approved' && { borderColor: '#3DD598' }
+          ]}
+        >
           <Text style={{ fontSize: 30 }}>{icon[item]}</Text>
         </View>
-        <Text style={styles.text}>{item}</Text>
-        <Text style={styles.text}>{item.status || 'Pending'}</Text>
+        <View style={{ flexDirection: 'column' }}>
+          <Text style={[styles.text, { fontWeight: 'bold', marginBottom: 10 }]}>
+            {item}
+          </Text>
+          <Text style={styles.text}>{item.status || 'Pending'}</Text>
+        </View>
       </View>
     );
   };
@@ -37,7 +40,6 @@ export default class ProfileScreen extends React.Component<any, any> {
   render() {
     const { navigation, route } = this.props;
     const { userData } = route.params;
-    const assessment = ['SSA', 'Counselor', 'Career Coach', 'HDB Assessment'];
 
     return (
       <View style={styles.container}>
@@ -46,11 +48,20 @@ export default class ProfileScreen extends React.Component<any, any> {
             <Text>👩</Text>
           </View>
           <View style={{ marginLeft: 10 }}>
-            <Text style={{ color: 'white' }}>{userData.Name}</Text>
+            <Text
+              style={{
+                marginLeft: 5,
+                color: 'white',
+                fontSize: 16,
+                fontWeight: 'bold'
+              }}
+            >
+              {userData.Name}
+            </Text>
             <Button
               color="white"
               onPress={() => navigation.navigate('UserDetails', { userData })}
-              title="Details"
+              title="Details >"
             />
           </View>
         </View>
@@ -98,7 +109,7 @@ const styles = StyleSheet.create({
   box: {
     width: 80,
     height: 80,
-    borderColor: '#3DD598',
+    borderColor: 'red',
     borderWidth: 3,
     backgroundColor: 'transparent',
     alignItems: 'center',
