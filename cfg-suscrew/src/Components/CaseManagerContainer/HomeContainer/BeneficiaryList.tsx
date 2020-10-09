@@ -26,7 +26,7 @@ export class BeneficiaryList extends React.Component<any, any> {
   };
 
   componentDidMount() {
-    this.getData()
+    this.getData();
   }
 
   getData = () => {
@@ -43,7 +43,7 @@ export class BeneficiaryList extends React.Component<any, any> {
         });
         this.setState({ data });
       });
-  }
+  };
 
   render() {
     const { navigation } = this.props;
@@ -56,8 +56,8 @@ export class BeneficiaryList extends React.Component<any, any> {
           <View
             style={{
               marginTop: 64,
-              justifyContent: "flex-end",
-              alignSelf: "flex-end"
+              justifyContent: 'flex-end',
+              alignSelf: 'flex-end'
             }}
           >
             <TouchableOpacity
@@ -134,21 +134,23 @@ export class BeneficiaryList extends React.Component<any, any> {
                 else navigation.navigate('Profile', { userData: item });
               }}
             >
-              <View
-                style={{
-                  width: 80,
-                  height: 80,
-                  borderRadius: 80 / 2,
-                  backgroundColor: colors[index % 4],
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <Text>👩</Text>
-              </View>
-              <View style={styles.textContainer}>
-                <Text style={styles.nameText}>{item.Name}</Text>
-                <Text style={{ color: 'white' }}>{item.Race}</Text>
+              <View style={{flexDirection: "row"}}>
+                <View
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: 80 / 2,
+                    backgroundColor: colors[index % 4],
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Text>👩</Text>
+                </View>
+                <View style={styles.textContainer}>
+                  <Text style={styles.nameText}>{item.Name}</Text>
+                  <Text style={{ color: 'white' }}>{item.Race}</Text>
+                </View>
               </View>
               <Icon
                 name="chevron-right"
@@ -189,7 +191,8 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     paddingVertical: 16,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: "space-between"
   },
   textContainer: {
     flexDirection: 'column',
