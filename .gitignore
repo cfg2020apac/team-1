@@ -4,3 +4,5 @@ Team*.zip
 *.crt
 *.key
 *.ovpn
+/cfg-suscrew/node_modules
+/.idea
