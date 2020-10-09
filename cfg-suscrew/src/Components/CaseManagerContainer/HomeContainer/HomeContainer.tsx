@@ -7,7 +7,7 @@ import MatchScreen from './MatchScreen';
 const Stack = createStackNavigator();
 
 const HomeContainer = () => (
-  <Stack.Navigator initialRouteName="BeneficiaryList">
+  <Stack.Navigator initialRouteName="Beneficiary">
     <Stack.Screen
       name="Beneficiary"
       component={BeneficiaryList}
