@@ -10,14 +10,29 @@ export default class ProfileScreen extends React.Component<any, any> {
     console.log(userData);
   }
 
-  renderAssessment = (item: any) => (
-    <View style={styles.itemContainer} key={item}>
-      <View style={styles.box}>
-        <Text style={{ fontSize: 30 }}>💪</Text>
+  renderAssessment = (item, status) => {
+    const icon = {
+      'Counselor Assessment': '🏫',
+      'SSA Assessment': '💪',
+      'Job Coach Assessment': '👔',
+      'HDB Assessment': '🏠'
+    };
+    return (
+      <View
+        style={[
+          styles.itemContainer,
+          status === 'Approved' && { borderColor: '#3DD598' }
+        ]}
+        key={item}
+      >
+        <View style={styles.box}>
+          <Text style={{ fontSize: 30 }}>{icon[item]}</Text>
+        </View>
+        <Text style={styles.text}>{item}</Text>
+        <Text style={styles.text}>{item.status || 'Pending'}</Text>
       </View>
-      <Text style={styles.text}>{item}</Text>
-    </View>
-  );
+    );
+  };
 
   render() {
     const { navigation, route } = this.props;
@@ -39,16 +54,30 @@ export default class ProfileScreen extends React.Component<any, any> {
             />
           </View>
         </View>
-        <TouchableOpacity
-          style={styles.itemContainer}
-          onPress={() => navigation.navigate('Match')}
-        >
-          <View style={styles.box}>
-            <Text style={{ fontSize: 30 }}>💪</Text>
-          </View>
-          <Text style={styles.text}>Matching</Text>
-        </TouchableOpacity>
-        {assessment.map((item) => this.renderAssessment(item))}
+        {!!userData.HDBStatus && userData.HDBStatus === 'Approved' && (
+          <TouchableOpacity
+            style={styles.itemContainer}
+            onPress={() => navigation.navigate('Match')}
+          >
+            <View style={styles.box}>
+              <Text style={{ fontSize: 30 }}>💪</Text>
+            </View>
+            <Text style={styles.text}>Matching</Text>
+          </TouchableOpacity>
+        )}
+        {userData.Counselor &&
+          this.renderAssessment(
+            'Counselor Assessment',
+            userData.CounselorStatus
+          )}
+        {userData.Operations &&
+          this.renderAssessment('SSA Assessment', userData.OperationsStatus)}
+        {userData.JobCoach &&
+          this.renderAssessment(
+            'Job Coach Assessment',
+            userData.JobCoachStatus
+          )}
+        {this.renderAssessment('HDB Assessment', userData.HDBStatus)}
       </View>
     );
   }
