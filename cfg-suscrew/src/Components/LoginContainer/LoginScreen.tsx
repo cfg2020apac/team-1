@@ -21,7 +21,7 @@ const LoginScreen: React.FunctionComponent<any> = ({setSession}) => {
 
   const userLogin = async (email: string, password: string) => {
     const users = firebaseDb.collection('User');
-    const snapshot = await users.where('Email', '==', value).get();
+    const snapshot = await users.where('Email', '==', value.toLowerCase()).get();
     if (snapshot.empty) {
       setError('No such user!');
     }
@@ -56,6 +56,7 @@ const LoginScreen: React.FunctionComponent<any> = ({setSession}) => {
             onChangeText={(text) => userText(text)}
             placeholder="Email"
             value={value}
+            keyboardType="email-address"
           />
 
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>

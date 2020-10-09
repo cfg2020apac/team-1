@@ -10,19 +10,36 @@ export default class ProfileScreen extends React.Component<any, any> {
     console.log(userData);
   }
 
-  renderAssessment = (item: any) => (
-    <View style={styles.itemContainer} key={item}>
-      <View style={styles.box}>
-        <Text style={{ fontSize: 30 }}>💪</Text>
+  renderAssessment = (item, status) => {
+    const icon = {
+      'Counselor Assessment': '🏫',
+      'SSA Assessment': '💪',
+      'Job Coach Assessment': '👔',
+      'HDB Assessment': '🏠'
+    };
+    return (
+      <View style={styles.itemContainer} key={item}>
+        <View
+          style={[
+            styles.box,
+            status === 'Approved' && { borderColor: '#3DD598' }
+          ]}
+        >
+          <Text style={{ fontSize: 30 }}>{icon[item]}</Text>
+        </View>
+        <View style={{ flexDirection: 'column' }}>
+          <Text style={[styles.text, { fontWeight: 'bold', marginBottom: 10 }]}>
+            {item}
+          </Text>
+          <Text style={styles.text}>{item.status || 'Pending'}</Text>
+        </View>
       </View>
-      <Text style={styles.text}>{item}</Text>
-    </View>
-  );
+    );
+  };
 
   render() {
     const { navigation, route } = this.props;
     const { userData } = route.params;
-    const assessment = ['SSA', 'Counselor', 'Career Coach', 'HDB Assessment'];
 
     return (
       <View style={styles.container}>
@@ -31,24 +48,47 @@ export default class ProfileScreen extends React.Component<any, any> {
             <Text>👩</Text>
           </View>
           <View style={{ marginLeft: 10 }}>
-            <Text style={{ color: 'white' }}>{userData.Name}</Text>
+            <Text
+              style={{
+                marginLeft: 5,
+                color: 'white',
+                fontSize: 16,
+                fontWeight: 'bold'
+              }}
+            >
+              {userData.Name}
+            </Text>
             <Button
               color="white"
               onPress={() => navigation.navigate('UserDetails', { userData })}
-              title="Details"
+              title="Details >"
             />
           </View>
         </View>
-        <TouchableOpacity
-          style={styles.itemContainer}
-          onPress={() => navigation.navigate('Match')}
-        >
-          <View style={styles.box}>
-            <Text style={{ fontSize: 30 }}>💪</Text>
-          </View>
-          <Text style={styles.text}>Matching</Text>
-        </TouchableOpacity>
-        {assessment.map((item) => this.renderAssessment(item))}
+        {!!userData.HDBStatus && userData.HDBStatus === 'Approved' && (
+          <TouchableOpacity
+            style={styles.itemContainer}
+            onPress={() => navigation.navigate('Match')}
+          >
+            <View style={styles.box}>
+              <Text style={{ fontSize: 30 }}>💪</Text>
+            </View>
+            <Text style={styles.text}>Matching</Text>
+          </TouchableOpacity>
+        )}
+        {userData.Counselor &&
+          this.renderAssessment(
+            'Counselor Assessment',
+            userData.CounselorStatus
+          )}
+        {userData.Operations &&
+          this.renderAssessment('SSA Assessment', userData.OperationsStatus)}
+        {userData.JobCoach &&
+          this.renderAssessment(
+            'Job Coach Assessment',
+            userData.JobCoachStatus
+          )}
+        {this.renderAssessment('HDB Assessment', userData.HDBStatus)}
       </View>
     );
   }
@@ -69,7 +109,7 @@ const styles = StyleSheet.create({
   box: {
     width: 80,
     height: 80,
-    borderColor: '#3DD598',
+    borderColor: 'red',
     borderWidth: 3,
     backgroundColor: 'transparent',
     alignItems: 'center',

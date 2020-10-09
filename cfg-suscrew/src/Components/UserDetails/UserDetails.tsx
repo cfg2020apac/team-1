@@ -36,21 +36,37 @@ export default class UserDetails extends React.Component<any, any> {
           <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 30 }}>
             Languages: {userData.LanguageSpoken}
           </Text>
-          <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
-            Preferences for roommate:
-          </Text>
-          <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
-            Ex-Convict: {userData.Preferences.exConvict}
-          </Text>
-          <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
-            Smoker: {userData.Preferences.wantSmoker}
-          </Text>
-          <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
-            Same Race: {userData.Preferences.sameRace}
-          </Text>
-          <Text style={{ color: '#fff', fontSize: 20 }}>
-            Same Language: {userData.Preferences.sameLanguage}
-          </Text>
+          {userData && userData.Preferences && (
+            <>
+              <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
+                Preferences for roommate:
+              </Text>
+              <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
+                Ex-Convict:{' '}
+                {userData &&
+                  userData.Preferences &&
+                  userData.Preferences.exConvict}
+              </Text>
+              <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
+                Smoker:{' '}
+                {userData &&
+                  userData.Preferences &&
+                  userData.Preferences.wantSmoker}
+              </Text>
+              <Text style={{ color: '#fff', fontSize: 20, paddingBottom: 10 }}>
+                Same Race:{' '}
+                {userData &&
+                  userData.Preferences &&
+                  userData.Preferences.sameRace}
+              </Text>
+              <Text style={{ color: '#fff', fontSize: 20 }}>
+                Same Language:{' '}
+                {userData &&
+                  userData.Preferences &&
+                  userData.Preferences.sameLanguage}
+              </Text>
+            </>
+          )}
         </View>
       </View>
     );
