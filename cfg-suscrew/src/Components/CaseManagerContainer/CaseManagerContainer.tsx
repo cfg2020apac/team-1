@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import NotificationScreen from './NotificationScreen';
+import NotificationScreen from '../NotificationScreen';
 import CalendarScreen from './CalendarScreen';
 import HomeContainer from './HomeContainer/HomeContainer';
 
