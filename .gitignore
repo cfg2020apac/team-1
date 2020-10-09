@@ -6,4 +6,5 @@ Team*.zip
 *.ovpn
 /cfg-suscrew/node_modules
 /cfg-suscrew/firebaseKey.ts
+/cfg-suscrew/.expo
 /.idea
