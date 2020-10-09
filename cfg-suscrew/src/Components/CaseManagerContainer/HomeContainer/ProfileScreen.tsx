@@ -5,7 +5,9 @@ import firebaseDb from '../../../../firebaseDb';
 export default class ProfileScreen extends React.Component<any, any> {
   componentDidMount() {
     const { route } = this.props;
-    const { userData } = route
+    const { userData } = route.params
+
+    console.log(userData)
   }
 
   renderAssessment = (item: any) => (
@@ -19,7 +21,7 @@ export default class ProfileScreen extends React.Component<any, any> {
 
   render() {
     const { navigation, route } = this.props;
-    const { userData } = route;
+    const { userData } = route.params;
     const assessment = ['SSA', 'Counselor', 'Career Coach', 'HDB Assessment'];
 
     return (
