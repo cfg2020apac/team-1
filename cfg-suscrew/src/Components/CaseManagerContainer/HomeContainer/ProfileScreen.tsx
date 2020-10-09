@@ -1,15 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
-import firebaseDb from '../../../../firebaseDb';
 
 export default class ProfileScreen extends React.Component<any, any> {
-  componentDidMount() {
-    const { route } = this.props;
-    const { userData } = route.params;
-
-    console.log(userData);
-  }
-
   renderAssessment = (item, status) => {
     const icon = {
       'Counselor Assessment': '🏫',
@@ -31,7 +23,7 @@ export default class ProfileScreen extends React.Component<any, any> {
           <Text style={[styles.text, { fontWeight: 'bold', marginBottom: 10 }]}>
             {item}
           </Text>
-          <Text style={styles.text}>{item.status || 'Pending'}</Text>
+          <Text style={styles.text}>{status || 'Pending'}</Text>
         </View>
       </View>
     );
