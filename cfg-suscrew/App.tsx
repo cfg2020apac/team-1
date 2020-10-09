@@ -1,18 +1,6 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from './src/Components/HomeScreen/HomeScreen';
-import Counsellor from './src/Components/ExternalHelpers/Counsellor';
-
-const Tab = createBottomTabNavigator();
+import CaseManagerContainer from './src/Components/CaseManagerContainer';
 
 export default function App() {
-    return (
-        <NavigationContainer>
-            <Tab.Navigator>
-                <Tab.Screen name="Home" component={HomeScreen} />
-                <Tab.Screen name="Counsellor" component={Counsellor} />
-            </Tab.Navigator>
-        </NavigationContainer>
-    );
+  return <CaseManagerContainer />;
 }
