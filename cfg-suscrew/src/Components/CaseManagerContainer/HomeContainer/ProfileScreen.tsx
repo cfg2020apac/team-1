@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default class ProfileScreen extends React.Component {
+export default class ProfileScreen extends React.Component<any, any> {
   renderAssessment = (item: any) => (
     <View style={styles.itemContainer} key={item}>
       <View style={styles.box}>
@@ -17,20 +12,21 @@ export default class ProfileScreen extends React.Component {
   );
 
   render() {
+    const { navigation } = this.props;
     const assessment = ['SSA', 'Counselor', 'Career Coach', 'HDB Assessment'];
 
     return (
       <View style={styles.container}>
-        <View style={{flexDirection: "row"}}>
+        <View style={{ flexDirection: 'row' }}>
           <View style={styles.circle}>
             <Text>👩</Text>
           </View>
-          <View style={{marginLeft: 10}}>
-            <Text style={{color: 'white'}}>Tan Ah Lian</Text>
+          <View style={{ marginLeft: 10 }}>
+            <Text style={{ color: 'white' }}>Tan Ah Lian</Text>
             <Text style={{ color: 'white' }}>Details</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.itemContainer}>
+        <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate('Match')}>
           <View style={styles.box}>
             <Text style={{ fontSize: 30 }}>💪</Text>
           </View>
@@ -74,5 +70,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC542',
     justifyContent: 'center',
     alignItems: 'center'
-  },
+  }
 });
