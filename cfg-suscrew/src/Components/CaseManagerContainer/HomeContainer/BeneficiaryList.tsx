@@ -30,19 +30,35 @@ export class BeneficiaryList extends React.Component<any, any> {
   }
 
   getData = () => {
-    firebaseDb
-      .collection('Profile')
-      .where('CaseManager', '==', this.props.session.userId)
-      .get()
-      .then((snapshot) => {
-        const data = [];
-        snapshot.docs.forEach((document) => {
-          const userData = document.data();
-          const profileId = document.id;
-          data.push({ profileId, ...userData });
+    if (this.props.session.role === 'Case Manager') {
+      firebaseDb
+        .collection('Profile')
+        .where('CaseManager', '==', this.props.session.userId)
+        .get()
+        .then((snapshot) => {
+          const data = [];
+          snapshot.docs.forEach((document) => {
+            const userData = document.data();
+            const profileId = document.id;
+            data.push({ profileId, ...userData });
+          });
+          this.setState({ data });
         });
-        this.setState({ data });
-      });
+    } else {
+      firebaseDb
+        .collection('Profile')
+        .where('Counselor', '==', true)
+        .get()
+        .then((snapshot) => {
+          const data = [];
+          snapshot.docs.forEach((document) => {
+            const userData = document.data();
+            const profileId = document.id;
+            data.push({ profileId, ...userData });
+          });
+          this.setState({ data });
+        });
+    }
   };
 
   render() {
