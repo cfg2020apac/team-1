@@ -4,7 +4,7 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity, KeyboardAvoidingView
 } from 'react-native';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import firebaseDb from '../../../firebaseDb';
@@ -39,7 +39,7 @@ const LoginScreen: React.FunctionComponent<any> = ({setSession}) => {
 
   return (
     <>
-      <View style={styles.mainContainer}>
+      <KeyboardAvoidingView style={styles.mainContainer} behavior="padding">
         <View style={styles.header}>
           <Text style={{ color: '#fff', fontSize: 40, paddingLeft: 50 }}>
             Welcome
@@ -95,7 +95,7 @@ const LoginScreen: React.FunctionComponent<any> = ({setSession}) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </>
   );
 };
