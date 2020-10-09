@@ -134,7 +134,7 @@ export class BeneficiaryList extends React.Component<any, any> {
                 else navigation.navigate('Profile', { userData: item });
               }}
             >
-              <View style={{flexDirection: "row"}}>
+              <View style={{ flexDirection: 'row' }}>
                 <View
                   style={{
                     width: 80,
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     paddingVertical: 16,
     flexDirection: 'row',
-    justifyContent: "space-between"
+    justifyContent: 'space-between'
   },
   textContainer: {
     flexDirection: 'column',

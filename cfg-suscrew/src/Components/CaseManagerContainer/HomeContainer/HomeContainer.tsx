@@ -46,16 +46,16 @@ const HomeContainer = () => (
         headerTintColor: '#96A7AF'
       }}
     />
-      <Stack.Screen
-        name="UserDetails"
-        component={UserDetails}
-        options={{
-            title: '',
-            headerBackTitle: 'Back',
-            headerStyle: { backgroundColor: '#30444E', shadowColor: 'transparent' },
-            headerTintColor: '#96A7AF'
-        }}
-      />
+    <Stack.Screen
+      name="UserDetails"
+      component={UserDetails}
+      options={{
+        title: '',
+        headerBackTitle: 'Back',
+        headerStyle: { backgroundColor: '#30444E', shadowColor: 'transparent' },
+        headerTintColor: '#96A7AF'
+      }}
+    />
     <Stack.Screen
       name="ActivityDetails"
       component={ActivityDetailsScreen}
