@@ -57,6 +57,9 @@ const NewProfileForm = ({ session }) => {
         setEthnicity('');
         setReligion('');
         setGender('');
+        setCounselor(false)
+        setOperation(false)
+        setJobCoach(false)
       })
       .catch((e) => console.log(e));
   };
@@ -147,18 +150,21 @@ const NewProfileForm = ({ session }) => {
         <CheckBox
           title="Requires Counselor"
           checked={counselor}
+          onPress={() => setCounselor(!counselor)}
           containerStyle={{ backgroundColor: 'transparent' }}
           textStyle={{ color: '#fff' }}
         />
         <CheckBox
           title="Requires Operation"
           checked={operation}
+          onPress={() => setOperation(!operation)}
           containerStyle={{ backgroundColor: 'transparent' }}
           textStyle={{ color: '#fff' }}
         />
         <CheckBox
           title="Requires JobCoach"
           checked={jobcoach}
+          onPress={() => setJobCoach(!jobcoach)}
           containerStyle={{ backgroundColor: 'transparent' }}
           textStyle={{ color: '#fff' }}
         />
