@@ -9,32 +9,33 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import Constants from 'expo-constants';
+import { connect } from 'react-redux';
+import { Button } from 'react-native-elements';
 
-export default class BeneficiaryList extends React.Component<any, any> {
+export class NotificationScreen extends React.Component<any, any> {
   render() {
-    const { navigation } = this.props;
 
     const data = [
       {
         id: 1,
         name: 'Tan Ah Lian',
         status: 'HDB APPROVED',
-        time: '4:20 PM',
+        time: '4:20 AM',
         message: 'Ready to send for matching.'
       },
       {
         id: 2,
         name: 'Tan Ah Niu',
         status: 'Missed Counsellor appointments for 2 weeks.',
-        time: '4:20 PM',
+        time: '6:02 AM',
         message:
           'Client has not been attending counselling sessions. Have been uncontactable for the past 2 weeks.'
       },
       {
         id: 3,
-        name: 'mario',
+        name: 'Donald Trump',
         status: 'Pending',
-        time: '4:20 PM',
+        time: '8:20 PM',
         message: 'Ready to send for matching.'
       }
     ];
@@ -90,10 +91,17 @@ export default class BeneficiaryList extends React.Component<any, any> {
           )}
           keyExtractor={(item, index) => `${item.id}_${index}`}
         />
+        <Button onPress={() => this.props.clearSession()} title="Log Out"/>
       </View>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  clearSession: () => dispatch({ type: 'CLEAR_SESSION'})
+});
+
+export default connect(null, mapDispatchToProps)(NotificationScreen)
 
 const styles = StyleSheet.create({
   container: {

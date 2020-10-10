@@ -146,7 +146,7 @@ export class BeneficiaryList extends React.Component<any, any> {
               style={styles.itemContainer}
               onPress={() => {
                 if (this.props.session.role !== 'Case Manager')
-                  navigation.navigate('ActivityDetails');
+                  navigation.navigate('ActivityDetails', {person: item});
                 else navigation.navigate('Profile', { userData: item });
               }}
             >

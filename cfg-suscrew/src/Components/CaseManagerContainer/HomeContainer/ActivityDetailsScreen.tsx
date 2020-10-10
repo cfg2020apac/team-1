@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Image
 } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
+import {CheckBox} from 'react-native-elements'
 import CalendarScreen from '../CalendarScreen';
 import { ScrollView } from 'react-native-gesture-handler';
 import StepIndicator from 'react-native-step-indicator';
@@ -36,7 +36,7 @@ export default function ActivityDetailsScreen({ navigation, route }) {
             width: 100,
             height: 100,
             borderRadius: 999999,
-            backgroundColor: person.bgColor,
+            backgroundColor: '#3ED598',
             justifyContent: 'center',
             marginRight: 24,
             alignItems: 'center'
@@ -50,7 +50,7 @@ export default function ActivityDetailsScreen({ navigation, route }) {
             marginTop: 24
           }}
         >
-          <Text style={{ color: '#FFFFFF', fontSize: 14 }}>{person.name}</Text>
+          <Text style={{ color: '#FFFFFF', fontSize: 14 }}>{person.Name}</Text>
           <Text
             style={{
               color: '#DDDDDD',
@@ -90,14 +90,12 @@ export default function ActivityDetailsScreen({ navigation, route }) {
               }}
             >
               <CheckBox
-                disabled={false}
-                value={toggleCheckBox}
-                style={{ marginRight: 8 }}
-                onValueChange={() => setToggleCheckBox(!toggleCheckBox)}
+                title="Take Up Beneficiary"
+                checked={toggleCheckBox}
+                onPress={() => setToggleCheckBox(!toggleCheckBox)}
+                textStyle={{ color: '#fff', fontSize: 20 }}
+                containerStyle={{backgroundColor: 'transparent'}}
               />
-              <Text style={{ color: '#fff', fontSize: 20 }}>
-                Take Up Beneficiary
-              </Text>
             </View>
           </ProgressStep>
           <ProgressStep
@@ -141,6 +139,7 @@ export default function ActivityDetailsScreen({ navigation, route }) {
             nextBtnStyle={{
               display: 'none'
             }}
+            nextBtnText="Approve"
             previousBtnStyle={{
               display: 'none'
             }}
@@ -168,7 +167,7 @@ export default function ActivityDetailsScreen({ navigation, route }) {
                 Success!
               </Text>
               <Text style={{ color: '#333', fontSize: 16 }}>
-                {person.name} has successfully
+                {person.Name} has successfully
               </Text>
               <Text style={{ color: '#333', fontSize: 16 }}>
                 completed his couselling.
