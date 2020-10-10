@@ -14,6 +14,7 @@ import { Button } from 'react-native-elements';
 
 export class NotificationScreen extends React.Component<any, any> {
   render() {
+    const colors = ['#FFC542', '#FF565E', '#3ED598'];
 
     const data = [
       {
@@ -45,10 +46,10 @@ export class NotificationScreen extends React.Component<any, any> {
         <FlatList
           style={styles.tableContainer}
           data={data}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <View style={styles.itemContainer}>
               <View style={styles.textContainer}>
-                <View style={styles.profileCircle}>
+                <View style={[styles.profileCircle, {backgroundColor: colors[index]}]}>
                   <Text>👩</Text>
                 </View>
 
@@ -112,7 +113,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 70 / 2,
-    backgroundColor: '#FFC542',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 6
